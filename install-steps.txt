@@ -20,28 +20,21 @@ tanzu package install harbor \
 --values-file harbor-data-values.yaml \
 --create-namespace
 
+# get the package
+tanzu package installed list -A
+
+## fix for vsphere overlay
+
+kubectl create secret generic harbor-database-redis-trivy-jobservice-registry-image-overlay -o yaml --dry-run=client --from-file=fix-fsgroup-overlay.yml | kubectl apply -f -
+
+kubectl annotate packageinstalls harbor  ext.packaging.carvel.dev/ytt-paths-from-secret-name.1=harbor-database-redis-trivy-jobservice-registry-image-overlay
+
 #update
 tanzu package installed update harbor \
 --package-name harbor.tanzu.vmware.com \
 --version 2.3.3+vmware.1-tkg.1 \
 --values-file  harbor-data-values.yaml \
 --create-namespace
-
-
-tanzu package installed list -A
-- Retrieving installed packages... I0718 15:36:22.405042   50551 request.go:665] Waited for 1.045173875s due to client-side throttling, not priority and fairness, request: GET:https://10.220.18.166:6443/apis/cert-manager.io/v1?timeout=32s
-
-
-  NAME          PACKAGE-NAME                   PACKAGE-VERSION        STATUS               NAMESPACE
-  cert-manager  cert-manager.tanzu.vmware.com  1.5.3+vmware.2-tkg.1   Reconcile succeeded  cert-manager-90d7a4af
-  contour       contour.tanzu.vmware.com       1.18.2+vmware.1-tkg.1  Reconcile succeeded  contour-7ff91622
-  harbor        harbor.tanzu.vmware.com        2.3.3+vmware.1-tkg.1   Reconciling          harbor-14596ab8
-
-
-kubectl create secret generic harbor-database-redis-trivy-jobservice-registry-image-overlay -o yaml --dry-run=client --from-file=harbor-vsphsere-overlay.yml | kubectl apply -f -
-
-kubectl annotate packageinstalls harbor  ext.packaging.carvel.dev/ytt-paths-from-secret-name.1=harbor-database-redis-trivy-jobservice-registry-image-overlay
-
 
 
 kubectl get svc envoy -n tanzu-system-ingress -o jsonpath='{.status.loadBalancer.ingress[0]}'
