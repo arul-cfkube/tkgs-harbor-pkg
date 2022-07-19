@@ -1,6 +1,15 @@
+
+#Require rolebinding to run priv workloads
 kubectl create clusterrolebinding default-tkg-admin-privileged-binding --clusterrole=psp:vmware-system-privileged --group=system:authenticated
+
+## check of available pkgs
 tanzu package available list -A
+
+# Install cert-manger in case you want to manage certs #optinal
 #tanzu package install cert-manager --package-name cert-manager.tanzu.vmware.com --namespace cert-manager --version 1.5.3+vmware.2-tkg.1 --create-namespace
+
+
+# Install contour
 tanzu package install contour --package-name=contour.tanzu.vmware.com --version=1.18.2+vmware.1-tkg.1 --values-file=contour-lb.yml --create-namespace
 
 
