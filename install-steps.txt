@@ -5,7 +5,7 @@ kubectl create clusterrolebinding default-tkg-admin-privileged-binding --cluster
 ## check of available pkgs
 tanzu package available list -A
 
-# Install cert-manger in case you want to manage certs #optinal
+# Install cert-manger in case you want to manage certs #optional
 #tanzu package install cert-manager --package-name cert-manager.tanzu.vmware.com --namespace cert-manager --version 1.5.3+vmware.2-tkg.1 --create-namespace
 
 
