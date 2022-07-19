@@ -1,0 +1,145 @@
+namespace: tanzu-system-registry
+hostname: harbor.arullab.com
+port:
+  https: 443
+logLevel: info
+tlsCertificate:
+  tls.crt: |
+    -----BEGIN CERTIFICATE-----
+    XXXXXXX
+    -----END CERTIFICATE-----
+
+  tls.key: |
+    -----BEGIN PRIVATE KEY-----
+    XXX
+    -----END PRIVATE KEY-----
+  ca.crt:
+enableContourHttpProxy: true
+harborAdminPassword: XXXXXXXXXXXXXXXXXXX
+secretKey: XXXXXXXXXXXXXXXX
+database:
+  password: XXXXXXXXXXXXXXXX
+core:
+  replicas: 1
+  secret: XXXXXXXXXXXXXXXX
+  xsrfKey: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+jobservice:
+  replicas: 1
+  secret: XXXXXXXXXXXXXXXX
+registry:
+  replicas: 1
+  secret: XXXXXXXXXXXXXXXX
+notary:
+  enabled: true
+trivy:
+  enabled: true
+  replicas: 1
+  gitHubToken: ""
+  skipUpdate: false
+persistence:
+  persistentVolumeClaim:
+    registry:
+      existingClaim: ""
+      storageClass: "XX-t0compute"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 10Gi
+    jobservice:
+      existingClaim: ""
+      storageClass: "XX-t0compute"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    database:
+      existingClaim: ""
+      storageClass: "XX-t0compute"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    redis:
+      existingClaim: ""
+      storageClass: "XX-t0compute"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    trivy:
+      existingClaim: ""
+      storageClass: "XX-t0compute"
+      subPath: ""
+      accessMode: ReadWriteOnce
+      size: 5Gi
+  imageChartStorage:
+    disableredirect: false
+    type: filesystem
+    filesystem:
+      rootdirectory: /storage
+    azure:
+      accountname: accountname
+      accountkey: base64encodedaccountkey
+      container: containername
+      realm: core.windows.net
+    gcs:
+      bucket: bucketname
+      encodedkey: base64-encoded-json-key-file
+      rootdirectory: null
+      chunksize: 5242880
+    s3:
+      region: us-west-1
+      bucket: bucketname
+      accesskey: null
+      secretkey: null
+      regionendpoint: null
+      encrypt: false
+      keyid: null
+      secure: true
+      v4auth: true
+      chunksize: null
+      rootdirectory: null
+      storageclass: STANDARD
+    swift:
+      authurl: https://storage.myprovider.com/v3/auth
+      username: username
+      password: password
+      container: containername
+      region: null
+      tenant: null
+      tenantid: null
+      domain: null
+      domainid: null
+      trustid: null
+      insecureskipverify: null
+      chunksize: null
+      prefix: null
+      secretkey: null
+      accesskey: null
+      authversion: null
+      endpointtype: null
+      tempurlcontainerkey: null
+      tempurlmethods: null
+    oss:
+      accesskeyid: accesskeyid
+      accesskeysecret: accesskeysecret
+      region: regionname
+      bucket: bucketname
+      endpoint: null
+      internal: null
+      encrypt: null
+      secure: null
+      chunksize: null
+      rootdirectory: null
+proxy:
+  httpProxy:
+  httpsProxy:
+  noProxy: 127.0.0.1,localhost,.local,.internal
+pspNames: vmware-system-restricted,vmware-system-privileged
+metrics:
+  enabled: false
+  core:
+    path: /metrics
+    port: 8001
+  registry:
+    path: /metrics
+    port: 8001
+  exporter:
+    path: /metrics
+    port: 8001
