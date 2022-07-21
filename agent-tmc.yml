@@ -1,0 +1,11 @@
+#Change context to tkgs namaesapce eg: kuc tkg-demo-ns
+#kubectl apply -f agent-tmc.yml
+---
+apiVersion: installers.tmc.cloud.vmware.com/v1alpha1
+kind: AgentInstall
+metadata:
+  name: tmc-agent-installer-config
+  namespace: svc-tmc-c8
+spec:
+  operation: INSTALL
+  registrationLink: https://XXXX.tmc.cloud.vmware.com/installer?id=736b91c5c5d445334f0b3746cee03fc78e85d8cb90fbd3f6bb3ffebbda1836d0&source=registration&type=tkgs
